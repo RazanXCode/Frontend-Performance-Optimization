@@ -8,6 +8,7 @@ import {
 } from '@angular/platform-browser'
 import { provideStore } from '@ngrx/store'
 import { listReducer } from './state/list.reducer'
+import { provideHttpClient } from '@angular/common/http'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideStore({ todos: listReducer }),
+    provideHttpClient()
   ],
 }

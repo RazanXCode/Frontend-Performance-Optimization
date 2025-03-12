@@ -22,6 +22,8 @@ import {
   removeTask,
   resetTasks,
 } from '../state/list.actions'
+import { TodoService, Todo } from '../to-do.service';
+
 
 @Component({
   selector: 'app-todo-list',
@@ -29,13 +31,17 @@ import {
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss',
 })
+  
+  
 export class TodoListComponent implements OnInit {
   todoForm?: FormGroup
   todos$?: Observable<Task[]>
   completedTodos$?: Observable<Task[]>
   incompleteTodos$?: Observable<Task[]>
+  apiTodos$?: Observable<Todo[]>;
 
-  constructor(private fb: FormBuilder, private store: Store) {
+
+  constructor(private fb: FormBuilder, private store: Store,private todoService: TodoService) {
     this.todos$ = this.store.select(selectAllTodos)
     this.completedTodos$ = this.store.select(selectCompletedTodos)
     this.incompleteTodos$ = this.store.select(selectIncompleteTodos)
@@ -45,6 +51,7 @@ export class TodoListComponent implements OnInit {
     this.todoForm = this.fb.group({
       name: new FormControl('', [Validators.min(2), Validators.required]),
     })
+    this.apiTodos$ = this.todoService.getTodos();
   }
   onSubmit() {
     this.todoForm?.reset()

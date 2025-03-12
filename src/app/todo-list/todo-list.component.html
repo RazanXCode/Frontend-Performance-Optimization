@@ -1,15 +1,11 @@
 <div class="todo-container">
-  <form
-    style="
+  <form style="
       display: flex;
       align-items: end;
       justify-content: center;
       padding: 5rem;
       gap: 4px;
-    "
-    [formGroup]="todoForm!"
-    (ngSubmit)="addTodo()"
-  >
+    " [formGroup]="todoForm!" (ngSubmit)="addTodo()">
     <div style="display: flex; flex-direction: column; gap: 4px">
       <label for="task-name">Task name</label>
       <input id="task-name" formControlName="name" />
@@ -23,18 +19,10 @@
       No tasks yet. Add a task to get started.
     </div>
     <ul class="todo-list">
-      <li
-        *ngFor="let todo of todos$ | async"
-        class="todo-item"
-        [ngClass]="{ completed: todo.complete }"
-      >
+      <li *ngFor="let todo of todos$ | async" class="todo-item" [ngClass]="{ completed: todo.complete }">
         <span class="todo-name">{{ todo.name }}</span>
         <div class="todo-actions">
-          <button
-            *ngIf="!todo.complete"
-            (click)="completeTodo(todo.id)"
-            class="complete-btn"
-          >
+          <button *ngIf="!todo.complete" (click)="completeTodo(todo.id)" class="complete-btn">
             ✓
           </button>
           <button (click)="removeTodo(todo.id)" class="remove-btn">✕</button>
@@ -43,11 +31,23 @@
     </ul>
   </div>
 
-  <button
-    (click)="resetAllTodos()"
-    class="reset-btn"
-    *ngIf="(todos$ | async)!.length > 0"
-  >
+  <button (click)="resetAllTodos()" class="reset-btn" *ngIf="(todos$ | async)!.length > 0">
     Reset All Tasks
   </button>
+
+  <h3>API Fetched Todos</h3>
+  <ul>
+    <li *ngFor="let todo of apiTodos$ | async">
+      {{ todo.title }} - <strong>{{ todo.completed ? 'Completed' : 'Pending' }}</strong>
+    </li>
+  </ul>
+
+  <div class="image-container">
+    <img src="assets/img1-min-resized.webp" alt="Image 1" width="300" height="553q" loading="lazy" />
+    <img src="assets/img2-min-resized.webp" alt="Image 2" width="300" height="201" loading="lazy" />
+    <img src="assets/img3-min-resized.webp" alt="Image 3" width="300" height="367" loading="lazy" />
+  </div>
+  
+
+
 </div>
